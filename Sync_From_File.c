@@ -1,0 +1,95 @@
+#include "header.h"
+void Sync_From_File(void)
+{
+	int size,num=0,i;
+	char filename[30];
+	SLL var,*node,temp;
+	FILE *fptr1,*fptr2;
+	fptr1=fopen("Bank_Details.csv","r");
+	size=sizeof(SLL)-sizeof(SLL*);
+	if(fptr1)
+	{
+		/*while(fread(&var,size,1,fptr))
+		{
+			node=calloc(1,sizeof(SLL));
+			strcpy(node->Name,var.Name);
+			node->Account_Balance=var.Account_Balance;
+			node->Contact_Number=var.Contact_Number;
+			strcpy(node->pin,var.pin);
+			strcpy(node->RFID,var.RFID);
+			node->Account_Number=var.Account_Number;
+			node->Trasnction_Count=var.Trasnction_Count;
+			node->Aadhar_Number=var.Aadhar_Number;
+			node->next=0;
+			node->number=var.number;
+			node->flag1=var.flag1;
+			node->flag2=var.flag2;
+			node->block=var.block;
+			if(node->flag1)
+			{
+				for(i=0;i<5;i++)
+				{
+					strcpy(node->history[i].type,var.history[i].type);
+					node->history[i].amount=var.history[i].amount;
+					node->history[i].Acc_Num=var.history[i].Acc_Num;
+					node->history[i].year=var.history[i].year;
+					node->history[i].month=var.history[i].month;
+					node->history[i].day=var.history[i].day;
+					node->history[i].hour=var.history[i].hour;
+					node->history[i].min=var.history[i].min;
+					node->history[i].trsncid=var.history[i].trsncid;
+				}
+			}
+			else
+			{
+				for(i=0;i<node->number;i++)
+				{
+					strcpy(node->history[i].type,var.history[i].type);
+					node->history[i].amount=var.history[i].amount;
+					node->history[i].Acc_Num=var.history[i].Acc_Num;
+					node->history[i].year=var.history[i].year;
+					node->history[i].month=var.history[i].month;
+					node->history[i].day=var.history[i].day;
+					node->history[i].hour=var.history[i].hour;
+					node->history[i].min=var.history[i].min;
+					node->history[i].trsncid=var.history[i].trsncid;
+				}
+			}*/
+			while(fscanf(fptr1,"%[^,],%d,%d,%d,%d,%[^,],%[^,],%ld,%lf,%d,%ld,%d\n",temp.Name,&temp.Account_Number,&temp.flag1,&temp.flag2,&temp.block,temp.pin,temp.RFID,&temp.Contact_Number,&temp.Account_Balance,&temp.Trasnction_Count,&temp.Aadhar_Number,&temp.number)==12)
+			{
+	               //fwrite(temp,size,1,fptr1);
+                sprintf(filename,"%d.csv",temp.Account_Number);
+                fptr2=fopen(filename,"r");
+                if(temp.flag1)
+                {
+                        for(i=0;i<5;i++)
+                        {
+                                fscanf(fptr2,"%[^,],%lf,%d,%d,%d,%d,%d,%d,%d\n",temp.history[i].type,&temp.history[i].amount,&temp.history[i].Acc_Num,&temp.history[i].month,&temp.history[i].day,&temp.history[i].year,&temp.history[i].hour,&temp.history[i].min,&temp.history[i].trsncid);
+                        }
+                }
+                else
+                {
+                        for(i=0;i<temp.Trasnction_Count;i++)
+                        {
+				       fscanf(fptr2,"%[^,],%lf,%d,%d,%d,%d,%d,%d,%d\n",temp.history[i].type,&temp.history[i].amount,&temp.history[i].Acc_Num,&temp.history[i].month,&temp.history[i].day,&temp.history[i].year,&temp.history[i].hour,&temp.history[i].min,&temp.history[i].trsncid);
+                        }
+
+                }
+		temp.next=0;
+                fclose(fptr2);
+        	node=calloc(1,sizeof(SLL));	
+		memmove(node,&temp,sizeof(temp));
+
+		if(Account_Details==NULL)
+		{
+			Account_Details=node;
+		}
+		else
+		{
+			node->next=Account_Details;
+			Account_Details=node;
+		}
+	}
+	}
+	fclose(fptr1);
+}
