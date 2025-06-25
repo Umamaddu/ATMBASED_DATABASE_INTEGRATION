@@ -121,6 +121,3 @@ AUTHOR / USAGE:
 Developed for embedded systems training and academic use.
 Modify or extend as per application requirements.
 
---------------------------
-ALL THE BEST!
---------------------------
